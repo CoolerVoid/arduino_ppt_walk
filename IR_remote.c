@@ -7,7 +7,7 @@ usando um arduino com seguinte código
 ---
 #include <IRremote.h>
 
-int RECV_PIN = 11;
+int RECV_PIN = 6;
 IRrecv irrecv(RECV_PIN);
 decode_results results;
 
