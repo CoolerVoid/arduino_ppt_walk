@@ -162,7 +162,7 @@ int main(int argc, char *argv[])
       if(strstr(buf,"FF7A85") || strstr(buf,"273009C4"))
       {
 // vai tocar um mp3
-       system("mpg123 /home/fulano/mp3/acdc/*");
+       system("/usr/bin/mpg123 /home/fulano/mp3/acdc/*");
       }
 
      }
