@@ -108,7 +108,7 @@ int main(int argc, char *argv[])
   }
 
    
-  if(strnlen(argv[1],511))
+  if(strnlen(argv[1],511)<511)
   {
 // iniciamos detalhes para automação das teclas
    if((display=XOpenDisplay(NULL)) == NULL) {
@@ -170,9 +170,12 @@ int main(int argc, char *argv[])
     
    }
   }
-
- XCloseDisplay(display);
- close(fd);
+  
+ if(display)
+  XCloseDisplay(display);
+  
+ if(fd)
+  close(fd);
 
  exit(EXIT_SUCCESS);    
 } 
