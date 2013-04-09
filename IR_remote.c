@@ -205,7 +205,7 @@ int serialread(int fd, char* buf, char until,int max)
   }
   buf[i] = b[0]; 
   i++;
- } while(b[0]!=until || max != i);
+ } while(b[0]!=until && max != i);
 
  buf[i]=0;  
 
