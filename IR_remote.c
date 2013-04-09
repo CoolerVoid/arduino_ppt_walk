@@ -100,6 +100,7 @@ int main(int argc, char *argv[])
  char buf[64];
  char *serialport=(char *)alloca(sizeof(char)*512);
 
+ bzero(serialport,sizeof(char)*512);
 
   if(argc<2) 
   {
@@ -122,7 +123,7 @@ int main(int argc, char *argv[])
    }
    XGetInputFocus(display, &winFocus, &revert);
  
-   strncpy(serialport,argv[1],510);
+   strncpy(serialport,argv[1],511);
    fd=serialboot(serialport, baudrate);
    fprintf(stdout,"Serial:%s\n",serialport);
 
