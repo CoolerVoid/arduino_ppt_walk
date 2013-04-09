@@ -44,7 +44,8 @@ m0nad,sigsegv,slyfunky,otacon_x32,eremitah,clandestine,f117,bsdaemon,colt7r...
 #include <stdio.h>    
 #include <stdlib.h> 
 #include <string.h>   
-#include <unistd.h>   
+#include <unistd.h> 
+#include <alloca.h>
 #include <termios.h>  
 #include <fcntl.h> 
 #include <time.h>
@@ -81,7 +82,7 @@ int revert;
 
 void type_key(unsigned c); 
 int serialboot(const char* serialport, int baud);
-int serialread(int fd, char* buf, char until);
+int serialread(int fd, char* buf, char until,int max);
 int WriteFile(char *file,char *str);
 
 void banner() 
@@ -96,7 +97,8 @@ void banner()
 int main(int argc, char *argv[]) 
 {
  int baudrate = BAUDRATE,fd=0; 
- char buf[64],serialport[512]; 
+ char buf[64];
+ char *serialport=(char *)alloca(sizeof(char)*512);
 
 
   if(argc<2) 
@@ -106,7 +108,7 @@ int main(int argc, char *argv[])
   }
 
    
-  if(strlen(argv[1])<511)
+  if(strnlen(argv[1],511))
   {
 // iniciamos detalhes para automação das teclas
    if((display=XOpenDisplay(NULL)) == NULL) {
@@ -122,7 +124,7 @@ int main(int argc, char *argv[])
 
 
    fprintf(stdout,"Serial:%s\n",argv[1]);
-   strncpy(serialport,argv[1],512);
+   strncpy(serialport,argv[1],511);
    fd=serialboot(serialport, baudrate);
 
    if(fd<=0)
@@ -137,7 +139,7 @@ int main(int argc, char *argv[])
    {
     bzero(buf, sizeof(char)*63);
 // efetuamos leitura e deixamos em "buf"
-    serialread(fd, buf, '\n');
+    serialread(fd, buf, '\n',62);
     usleep(620000);
     puts(buf);
      if(strlen(buf)>3)
@@ -185,7 +187,7 @@ void type_key(unsigned c)
 }
 
 // leitura serial
-int serialread(int fd, char* buf, char until)
+int serialread(int fd, char* buf, char until,int max)
 {
  char b[1];
  int i=0;
@@ -200,7 +202,7 @@ int serialread(int fd, char* buf, char until)
   }
   buf[i] = b[0]; 
   i++;
- } while(b[0]!=until);
+ } while(b[0]!=until || max != i);
 
  buf[i]=0;  
 
