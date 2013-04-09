@@ -83,7 +83,6 @@ int revert;
 void type_key(unsigned c); 
 int serialboot(const char* serialport, int baud);
 int serialread(int fd, char* buf, char until,int max);
-int WriteFile(char *file,char *str);
 
 void banner() 
 {
