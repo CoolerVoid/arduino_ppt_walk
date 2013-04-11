@@ -136,7 +136,7 @@ int main(int argc, char *argv[])
    
    while(1) 
    {
-    bzero(buf, sizeof(char)*63);
+    bzero(buf, sizeof(char)*64);
 // efetuamos leitura e deixamos em "buf"
     serialread(fd, buf, '\n',62);
     usleep(620000);
