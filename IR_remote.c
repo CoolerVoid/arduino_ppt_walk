@@ -129,7 +129,6 @@ int main(int argc, char *argv[])
    if(fd<=0)
    {
     DEBUG("veja se o dispositivo esta conectado!!");
-    DEBUG("%d\n",fd);
     exit(EXIT_SUCCESS);
    }
 
