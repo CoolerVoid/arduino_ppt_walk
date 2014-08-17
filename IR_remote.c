@@ -172,7 +172,10 @@ int main(int argc, char *argv[])
      			}	
     
    		}
-  	}
+  	} else {
+		DEBUG("\nErro\nentrada muito grande...\n");
+		exit(1);
+	}
   
 	if( display )
 		XCloseDisplay(display);
