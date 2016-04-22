@@ -85,7 +85,7 @@ int serialread( int fd, char* buf, char until, int max );
 void banner() 
 {
 	fprintf(stdout,"\nFollow patern: ./This_Code <SerialPort>\n"
-		"Controlador de slides para palestras :-] v0.1 !!!\n"
+		"Presenter controller with TV remote   :-] v0.1 !!!\n"
 		"Coded By Cooler_\n"
 		"\n");
 }
@@ -110,7 +110,7 @@ int main(int argc, char *argv[])
    
 	if( strnlen(argv[1],18) <= 16)
   	{
-// iniciamos detalhes para automação das teclas
+// start get keys of keyboard
    		if( (display=XOpenDisplay(NULL)) == NULL) 
    		{
     			DEBUG("%s: can't open %s\n", argv[0], XDisplayName(NULL));
@@ -139,7 +139,7 @@ int main(int argc, char *argv[])
    		while(1) 
    		{
     			memset(buf,0,16);
-// efetuamos leitura e deixamos em "buf"
+// read the input of serial device put in "buf"
     			serialread(fd, buf, '\n',16);
     			usleep(620000);
     			puts(buf);
@@ -148,24 +148,24 @@ int main(int argc, char *argv[])
      			{
       				fprintf(stdout,"\n string: %s \n tamanho: %d",buf,strlen(buf));
 
-// button number 1 , buf == E13DDA28 então...
+// button number 1 , if buf == E13DDA28 ...
       				if( strstr(buf,"FF30CF") || strstr(buf,"E13DDA28") )
       				{
-// se apertar o botão 1 no controle da samsung ou LG vai simular a tecla "k"(vai voltar slides)
+// if hold button 1, hold the key "k" of keyboard to get next screen of presenter
        					type_key('k');
       				}
 
 // button number 2
       				if( strstr(buf,"FF18E7") || strstr(buf,"AD586662") )
       				{
-// se apertar o botão 2 no controle da samsung ou LG vai simular a tecla "l"(vai passar slides)
+// if hold button 2, hold the key "l" of keyboard to back screen of presenter
        					type_key('l');
       				}
 
 // button number 3
       				if( strstr(buf,"FF7A85") || strstr(buf,"273009C4") )
       				{
-// vai tocar um mp3
+//if hold button 3 plays mp3 music
        					execl ("/usr/bin/mpg123"," ","/home/fulano/mp3/acdc/*",NULL);
       				}
 
